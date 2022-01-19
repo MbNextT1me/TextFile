@@ -8,12 +8,19 @@
 class TextFile
 {
 public:
+	//State for sort
+	enum class SortState {
+		up, //from min to max
+		down //from max to min
+	};
+
 	//State for textFile
 	enum class TextFileState{
 		out,
 		in
 	};
 
+	//Constructors and Destructor
 	TextFile();
 	TextFile(std::string path, TextFileState state);
 	~TextFile();
@@ -24,9 +31,18 @@ public:
 	//Check file
 	bool is_open();
 
-	//Sear string in txtFile
+	//Search str in txtFile
 	bool strInFile(std::string addString);
 	bool strInFile2(std::string addString, std::vector<std::string> rFile);
+
+	//add str from file2 to file1
+	void addToTheEndOfFile(TextFile& addFile);
+
+	//sort column in file
+	void sortColumn (SortState state, int col);
+
+	//sum row in column
+	void sumRowInCol (SortState state, int col);
 
 	//«+=» - add uniq str
 	void operator += (std::string addString);
@@ -43,9 +59,17 @@ public:
 private:
 	//Read file
 	void readFile();
+	
+	//vector for str's from file
 	std::vector<std::string> rFile;
+	
+	//main txt file
 	std::fstream file;
+
+	//path to file
 	std::string path = "";
+
+	//state of textFile
 	TextFileState state = TextFileState::in;
 };
 
